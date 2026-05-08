@@ -14,6 +14,7 @@ import com.github.ezplugins.ezskills.gui.SkillMenuListener;
 import com.github.ezplugins.ezskills.gui.SkillProgressMenu;
 import com.github.ezplugins.ezskills.notification.LevelUpNotifier;
 import com.github.ezplugins.ezskills.service.EzSkillsServiceImpl;
+import com.github.ezplugins.ezskills.skill.SkillDefinitionRegistry;
 import com.github.ezplugins.ezskills.skill.SkillManager;
 import com.github.ezplugins.ezskills.skill.SkillProfileListener;
 import com.github.ezplugins.ezskills.storage.StorageManager;
@@ -58,8 +59,11 @@ public final class Bootstrap {
         final StorageManager storageManager = new StorageManager(plugin, configManager);
         storageManager.initialise();
 
+        final SkillDefinitionRegistry skillDefinitionRegistry = new SkillDefinitionRegistry();
+
         final SkillManager skillManager =
-                new SkillManager(plugin, configManager, storageManager.getRepository());
+                new SkillManager(plugin, configManager, storageManager.getRepository(),
+                        skillDefinitionRegistry);
 
         final AbilityDefinitionRegistry abilityDefinitionRegistry = new AbilityDefinitionRegistry();
         abilityDefinitionRegistry.registerBuiltIns();
@@ -68,10 +72,11 @@ public final class Bootstrap {
 
         Registry.register(new Registry(
                 configManager, storageManager, skillManager,
-                abilityDefinitionRegistry, abilityManager));
+                abilityDefinitionRegistry, abilityManager, skillDefinitionRegistry));
 
         EzSkillsAPI.init(new EzSkillsServiceImpl(
-                plugin, skillManager, abilityManager, configManager, abilityDefinitionRegistry));
+                plugin, skillManager, abilityManager, configManager, abilityDefinitionRegistry,
+                skillDefinitionRegistry));
 
         registerListeners(skillManager, abilityManager, configManager);
         registerCommands(skillManager, abilityManager, configManager,

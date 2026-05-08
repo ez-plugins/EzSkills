@@ -3,6 +3,7 @@ package com.github.ezplugins.ezskills;
 import com.github.ezplugins.ezskills.ability.AbilityDefinitionRegistry;
 import com.github.ezplugins.ezskills.ability.AbilityManager;
 import com.github.ezplugins.ezskills.config.ConfigManager;
+import com.github.ezplugins.ezskills.skill.SkillDefinitionRegistry;
 import com.github.ezplugins.ezskills.skill.SkillManager;
 import com.github.ezplugins.ezskills.storage.StorageManager;
 import org.jetbrains.annotations.NotNull;
@@ -34,16 +35,21 @@ public final class Registry {
     /** Manages per-player ability state (preparing, active, cooldown). */
     private final AbilityManager abilityManager;
 
+    /** Registry of custom skill definitions registered by external plugins. */
+    private final SkillDefinitionRegistry skillDefinitionRegistry;
+
     Registry(@NotNull final ConfigManager configManager,
              @NotNull final StorageManager storageManager,
              @NotNull final SkillManager skillManager,
              @NotNull final AbilityDefinitionRegistry abilityDefinitionRegistry,
-             @NotNull final AbilityManager abilityManager) {
+             @NotNull final AbilityManager abilityManager,
+             @NotNull final SkillDefinitionRegistry skillDefinitionRegistry) {
         this.configManager = configManager;
         this.storageManager = storageManager;
         this.skillManager = skillManager;
         this.abilityDefinitionRegistry = abilityDefinitionRegistry;
         this.abilityManager = abilityManager;
+        this.skillDefinitionRegistry = skillDefinitionRegistry;
     }
 
     // -------------------------------------------------------------------------
@@ -103,5 +109,10 @@ public final class Registry {
     @NotNull
     public AbilityManager getAbilityManager() {
         return abilityManager;
+    }
+
+    @NotNull
+    public SkillDefinitionRegistry getSkillDefinitionRegistry() {
+        return skillDefinitionRegistry;
     }
 }

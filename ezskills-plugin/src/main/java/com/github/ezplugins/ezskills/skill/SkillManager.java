@@ -38,6 +38,9 @@ public final class SkillManager {
     /** Jaloquent repository for persistent storage. */
     private final ModelRepository<SkillProfileModel> repository;
 
+    /** Registry of custom skill definitions; used when loading profiles and handling custom XP. */
+    private final SkillDefinitionRegistry skillDefinitionRegistry;
+
     /** In-memory cache of loaded skill profiles, keyed by player UUID. */
     private final Map<UUID, SkillProfile> profiles = new ConcurrentHashMap<>();
 
@@ -62,10 +65,12 @@ public final class SkillManager {
 
     public SkillManager(@NotNull JavaPlugin plugin,
                         @NotNull ConfigManager configManager,
-                        @NotNull ModelRepository<SkillProfileModel> repository) {
+                        @NotNull ModelRepository<SkillProfileModel> repository,
+                        @NotNull SkillDefinitionRegistry skillDefinitionRegistry) {
         this.plugin = plugin;
         this.configManager = configManager;
         this.repository = repository;
+        this.skillDefinitionRegistry = skillDefinitionRegistry;
         this.worker = new Thread(this::processQueue, "EzSkills-StorageWorker");
         this.worker.setDaemon(true);
         this.worker.start();
@@ -240,6 +245,81 @@ public final class SkillManager {
         taskQueue.add(new SaveTask(playerId, profile));
     }
 
+    // -------------------------------------------------------------------------
+    // Custom skill mutations (string-based, for externally registered skills)
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the level for a custom skill, or {@code 1} if the profile is not loaded or
+     * the skill has no entry yet.
+     *
+     * @param playerId  the player UUID
+     * @param skillName the custom skill name (case-insensitive)
+     * @return the current level
+     */
+    public int getCustomLevel(@NotNull UUID playerId, @NotNull String skillName) {
+        final SkillProfile profile = profiles.get(playerId);
+        if (profile == null) {
+            return 1;
+        }
+        return profile.getCustomProgress(skillName).getLevel();
+    }
+
+    /**
+     * Returns the accumulated experience for a custom skill, or {@code 0.0} if not loaded.
+     *
+     * @param playerId  the player UUID
+     * @param skillName the custom skill name (case-insensitive)
+     * @return the current experience
+     */
+    public double getCustomExperience(@NotNull UUID playerId, @NotNull String skillName) {
+        final SkillProfile profile = profiles.get(playerId);
+        if (profile == null) {
+            return 0.0;
+        }
+        return profile.getCustomProgress(skillName).getExperience();
+    }
+
+    /**
+     * Adds experience to a custom skill and checks for level-ups.
+     *
+     * @param playerId  the player UUID
+     * @param skillName the custom skill name (case-insensitive)
+     * @param amount    the amount to add (must be positive)
+     */
+    public void addCustomExperience(@NotNull UUID playerId,
+                                    @NotNull String skillName,
+                                    double amount) {
+        final SkillProfile profile = profiles.get(playerId);
+        if (profile == null) {
+            return;
+        }
+        final SkillProgress progress = profile.getCustomProgress(skillName);
+        progress.setExperience(progress.getExperience() + amount);
+        checkCustomLevelUp(playerId, skillName, profile);
+        taskQueue.add(new SaveTask(playerId, profile));
+    }
+
+    /**
+     * Sets the level for a custom skill directly, resetting experience to zero.
+     *
+     * @param playerId  the player UUID
+     * @param skillName the custom skill name (case-insensitive)
+     * @param level     the new level (must be &gt;= 1)
+     */
+    public void setCustomLevel(@NotNull UUID playerId,
+                               @NotNull String skillName,
+                               int level) {
+        final SkillProfile profile = profiles.get(playerId);
+        if (profile == null) {
+            return;
+        }
+        final SkillProgress progress = profile.getCustomProgress(skillName);
+        progress.setLevel(Math.max(1, level));
+        progress.setExperience(0.0);
+        taskQueue.add(new SaveTask(playerId, profile));
+    }
+
     /**
      * Queries the top {@code limit} players by level for the given skill type.
      * Requires a SQL-backed store; throws {@link StorageException} for flat-map stores.
@@ -353,6 +433,41 @@ public final class SkillManager {
         return configManager.getSkillsConfig().getInt(key, 100);
     }
 
+    private void checkCustomLevelUp(UUID playerId, String skillName, SkillProfile profile) {
+        final SkillProgress progress = profile.getCustomProgress(skillName);
+        final int maxLevel = getCustomMaxLevel(skillName);
+        double xpForNext = xpForCustomNextLevel(skillName, progress.getLevel());
+
+        while (progress.getExperience() >= xpForNext && progress.getLevel() < maxLevel) {
+            progress.setExperience(progress.getExperience() - xpForNext);
+            progress.setLevel(progress.getLevel() + 1);
+            xpForNext = xpForCustomNextLevel(skillName, progress.getLevel());
+        }
+
+        if (progress.getLevel() >= maxLevel) {
+            progress.setExperience(0);
+        }
+    }
+
+    private double xpForCustomNextLevel(String skillName, int currentLevel) {
+        final String key = skillName.toLowerCase();
+        final double defaultBase = skillDefinitionRegistry.find(skillName)
+                .map(SkillDefinition::getDefaultXpBase).orElse(100.0);
+        final double defaultMultiplier = skillDefinitionRegistry.find(skillName)
+                .map(SkillDefinition::getDefaultXpMultiplier).orElse(1.5);
+        final double base = configManager.getSkillsConfig().getDouble(key + ".xp-base", defaultBase);
+        final double multiplier = configManager.getSkillsConfig()
+                .getDouble(key + ".xp-multiplier", defaultMultiplier);
+        return base * Math.pow(multiplier, currentLevel - 1);
+    }
+
+    private int getCustomMaxLevel(String skillName) {
+        final String key = skillName.toLowerCase() + ".max-level";
+        final int defaultMax = skillDefinitionRegistry.find(skillName)
+                .map(SkillDefinition::getDefaultMaxLevel).orElse(100);
+        return configManager.getSkillsConfig().getInt(key, defaultMax);
+    }
+
     private void processQueue() {
         while (running || !taskQueue.isEmpty()) {
             try {
@@ -380,8 +495,9 @@ public final class SkillManager {
         public void run(SkillManager manager) {
             SkillProfile loaded;
             try {
+                final List<String> customNames = manager.skillDefinitionRegistry.getNames();
                 final Optional<SkillProfileModel> opt = manager.repository.find(playerId.toString());
-                loaded = opt.map(SkillProfileModel::toSkillProfile).orElseGet(SkillProfile::new);
+                loaded = opt.map(m -> m.toSkillProfile(customNames)).orElseGet(SkillProfile::new);
             }
             catch (Exception e) {
                 manager.plugin.getLogger().log(Level.SEVERE,

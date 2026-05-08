@@ -15,7 +15,10 @@ public enum SkillType {
     FISHING,
 
     /** Skill gained by fighting mobs and players. */
-    FIGHTING;
+    FIGHTING,
+
+    /** Skill gained by performing acrobatic actions such as jumping, falling, and sprinting. */
+    ACROBATICS;
 
     /**
      * Returns the {@link SkillType} whose name matches the given string, case-insensitively.

@@ -1,6 +1,7 @@
 package com.github.ezplugins.ezskills.api;
 
 import com.github.ezplugins.ezskills.ability.AbilityDefinition;
+import com.github.ezplugins.ezskills.skill.SkillDefinition;
 import com.github.ezplugins.ezskills.skill.SkillProfile;
 import java.util.List;
 import java.util.UUID;
@@ -130,6 +131,25 @@ public interface EzSkillsService {
      * @return window in milliseconds
      */
     long getAbilityPreparationWindowMillis(@NotNull String abilityName);
+
+    /**
+     * Registers a {@link SkillDefinition} so that it is tracked by EzSkills.
+     *
+     * <p>Call this from your plugin's {@code onEnable} <em>before</em> any players join.
+     * The skill name must not clash with a built-in {@link com.github.ezplugins.ezskills.skill.SkillType}.</p>
+     *
+     * @param definition the definition to register
+     * @throws IllegalArgumentException if the name conflicts with a built-in skill
+     */
+    void registerSkill(@NotNull SkillDefinition definition);
+
+    /**
+     * Returns all currently registered custom skill definitions.
+     *
+     * @return unmodifiable list of definitions
+     */
+    @NotNull
+    List<SkillDefinition> getRegisteredSkills();
 
     /**
      * Registers an {@link AbilityDefinition} so that it appears in the ability overview GUI.

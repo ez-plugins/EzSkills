@@ -97,6 +97,11 @@ fighting:
   xp-base:       120.0
   xp-multiplier: 1.6
   max-level:     100
+
+acrobatics:
+  xp-base:       80.0
+  xp-multiplier: 1.4
+  max-level:     100
 ```
 
 | Key | Type | Description |

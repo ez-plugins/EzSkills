@@ -6,6 +6,8 @@ import com.github.ezplugins.ezskills.ability.AbilityManager;
 import com.github.ezplugins.ezskills.ability.AbilityType;
 import com.github.ezplugins.ezskills.api.EzSkillsService;
 import com.github.ezplugins.ezskills.config.ConfigManager;
+import com.github.ezplugins.ezskills.skill.SkillDefinition;
+import com.github.ezplugins.ezskills.skill.SkillDefinitionRegistry;
 import com.github.ezplugins.ezskills.skill.SkillManager;
 import com.github.ezplugins.ezskills.skill.SkillProfile;
 import com.github.ezplugins.ezskills.skill.SkillType;
@@ -43,34 +45,43 @@ public final class EzSkillsServiceImpl implements EzSkillsService {
     /** Registry of all registered ability definitions. */
     private final AbilityDefinitionRegistry abilityDefinitionRegistry;
 
+    /** Registry of all custom skill definitions registered by external plugins. */
+    private final SkillDefinitionRegistry skillDefinitionRegistry;
+
     /**
      * Creates a new service implementation.
      *
-     * @param plugin                  the owning plugin instance
-     * @param skillManager            the skill manager
-     * @param abilityManager          the ability manager
-     * @param configManager           the configuration manager
+     * @param plugin                    the owning plugin instance
+     * @param skillManager              the skill manager
+     * @param abilityManager            the ability manager
+     * @param configManager             the configuration manager
      * @param abilityDefinitionRegistry the ability definition registry
+     * @param skillDefinitionRegistry   the skill definition registry
      */
     public EzSkillsServiceImpl(@NotNull final JavaPlugin plugin,
                                @NotNull final SkillManager skillManager,
                                @NotNull final AbilityManager abilityManager,
                                @NotNull final ConfigManager configManager,
-                               @NotNull final AbilityDefinitionRegistry abilityDefinitionRegistry) {
+                               @NotNull final AbilityDefinitionRegistry abilityDefinitionRegistry,
+                               @NotNull final SkillDefinitionRegistry skillDefinitionRegistry) {
         this.plugin = plugin;
         this.skillManager = skillManager;
         this.abilityManager = abilityManager;
         this.configManager = configManager;
         this.abilityDefinitionRegistry = abilityDefinitionRegistry;
+        this.skillDefinitionRegistry = skillDefinitionRegistry;
     }
 
     @Override
     public int getSkillLevel(@NotNull final UUID playerId, @NotNull final String skillName) {
         final SkillType type = SkillType.fromString(skillName);
-        if (type == null) {
-            return 1;
+        if (type != null) {
+            return skillManager.getLevel(playerId, type);
         }
-        return skillManager.getLevel(playerId, type);
+        if (skillDefinitionRegistry.isRegistered(skillName)) {
+            return skillManager.getCustomLevel(playerId, skillName);
+        }
+        return 1;
     }
 
     @Override
@@ -81,10 +92,13 @@ public final class EzSkillsServiceImpl implements EzSkillsService {
     @Override
     public double getSkillExperience(@NotNull final UUID playerId, @NotNull final String skillName) {
         final SkillType type = SkillType.fromString(skillName);
-        if (type == null) {
-            return 0.0;
+        if (type != null) {
+            return skillManager.getExperience(playerId, type);
         }
-        return skillManager.getExperience(playerId, type);
+        if (skillDefinitionRegistry.isRegistered(skillName)) {
+            return skillManager.getCustomExperience(playerId, skillName);
+        }
+        return 0.0;
     }
 
     @Override
@@ -98,10 +112,13 @@ public final class EzSkillsServiceImpl implements EzSkillsService {
                               @NotNull final String skillName,
                               final double amount) {
         final SkillType type = SkillType.fromString(skillName);
-        if (type == null) {
+        if (type != null) {
+            skillManager.addExperience(playerId, type, amount);
             return;
         }
-        skillManager.addExperience(playerId, type, amount);
+        if (skillDefinitionRegistry.isRegistered(skillName)) {
+            skillManager.addCustomExperience(playerId, skillName, amount);
+        }
     }
 
     @Override
@@ -121,10 +138,24 @@ public final class EzSkillsServiceImpl implements EzSkillsService {
                               @NotNull final String skillName,
                               final int level) {
         final SkillType type = SkillType.fromString(skillName);
-        if (type == null) {
+        if (type != null) {
+            skillManager.setLevel(playerId, type, level);
             return;
         }
-        skillManager.setLevel(playerId, type, level);
+        if (skillDefinitionRegistry.isRegistered(skillName)) {
+            skillManager.setCustomLevel(playerId, skillName, level);
+        }
+    }
+
+    @Override
+    public void registerSkill(@NotNull final SkillDefinition definition) {
+        skillDefinitionRegistry.register(definition);
+    }
+
+    @Override
+    @NotNull
+    public List<SkillDefinition> getRegisteredSkills() {
+        return skillDefinitionRegistry.getAll();
     }
 
     @Override
