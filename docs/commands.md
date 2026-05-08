@@ -41,7 +41,7 @@ All admin subcommands use `/ezskills` and require the `ezskills.admin` permissio
 | Command | Description |
 |---------|-------------|
 | `/ezskills get <player> <skill>` | Prints the level and XP of one skill for a player. |
-| `/ezskills info <player>` | Prints a full skill overview. Supports offline players — loads from storage asynchronously. |
+| `/ezskills info <player>` | Prints a full skill overview. Supports offline players; loads from storage asynchronously. |
 
 ### Mutation
 
@@ -74,11 +74,11 @@ All admin subcommands use `/ezskills` and require the `ezskills.admin` permissio
 
 ## Argument reference
 
-**`<skill>`** — any of: `WOODCUTTING`, `MINING`, `FISHING`, `FIGHTING` (case-insensitive)
+**`<skill>`**: any of: `WOODCUTTING`, `MINING`, `FISHING`, `FIGHTING` (case-insensitive)
 
-**`<ability>`** — any of: `LUMBERJACK`, `SPELUNKER`, `ANGLER`, `WARRIOR` (case-insensitive)
+**`<ability>`**: any of: `LUMBERJACK`, `SPELUNKER`, `ANGLER`, `WARRIOR` (case-insensitive)
 
-**`<player>`** — player name (online or offline)
+**`<player>`**: player name (online or offline)
 
 ---
 

@@ -18,7 +18,7 @@ nav_order: 2
 
 ## Dependency setup
 
-Add the `ezskills-api` artifact to your project — see [Installation](installation.md) for Maven and Gradle snippets.
+Add the `ezskills-api` artifact to your project; see [Installation](installation.md) for Maven and Gradle snippets.
 
 Declare EzSkills as a (soft) dependency in `plugin.yml` so the API is available when your plugin loads:
 

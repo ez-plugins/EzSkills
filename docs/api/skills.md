@@ -19,9 +19,9 @@ Skill names are matched case-insensitively wherever the API accepts a `String` s
 
 ## Integrating with skills from your plugin
 
-EzSkills does not know about game events on its own — it exposes an XP API that **you** call from your plugin's event listeners.
+EzSkills does not know about game events on its own; it exposes an XP API that **you** call from your plugin's event listeners.
 
-### 1 — Depend on EzSkills
+### 1: Depend on EzSkills
 
 Add EzSkills as a soft-depend in your `plugin.yml` so your plugin loads after it:
 
@@ -44,7 +44,7 @@ And add the API artifact to your `pom.xml`:
 </dependency>
 ```
 
-### 2 — Award XP using the source-aware method
+### 2: Award XP using the source-aware method
 
 Pass `this` (your plugin instance) as the first argument to `addExperience`. EzSkills will then automatically apply the XP multiplier and enabled/disabled flag that the **server admin** has configured for your plugin in EzSkills' `config.yml`:
 
@@ -79,9 +79,9 @@ public final class SkillListener implements Listener {
 }
 ```
 
-### 3 — Server-admin configuration (EzSkills' `config.yml`)
+### 3: Server-admin configuration (EzSkills' `config.yml`)
 
-Server admins configure your plugin's XP contribution in EzSkills' own `config.yml`, under `plugin-overrides`. No code changes in your plugin are needed — EzSkills applies these settings automatically:
+Server admins configure your plugin's XP contribution in EzSkills' own `config.yml`, under `plugin-overrides`. No code changes in your plugin are needed; EzSkills applies these settings automatically:
 
 ```yaml
 # EzSkills/config.yml
@@ -102,9 +102,9 @@ plugin-overrides:
 | `enabled` | `true` | When `false`, all XP calls from this plugin for this skill are silently ignored |
 | `xp-multiplier` | `1.0` | Multiplied against the raw amount passed to `addExperience` |
 
-Plugins not listed under `plugin-overrides` are unaffected — they always award the exact amount passed to the API.
+Plugins not listed under `plugin-overrides` are unaffected; they always award the exact amount passed to the API.
 
-### 4 — React to level-ups
+### 4: React to level-ups
 
 Listen to `SkillLevelUpEvent` to trigger custom rewards:
 

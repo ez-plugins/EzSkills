@@ -31,7 +31,7 @@ notifications:
     duration: 5               # Seconds the boss-bar is shown
     message: "&6⬆ {player} reached {skill} Level {level}!"
 
-# Per-plugin XP overrides — see Plugin Overrides section below
+# Per-plugin XP overrides - see Plugin Overrides section below
 plugin-overrides: {}
 ```
 
@@ -63,7 +63,7 @@ plugin-overrides:
 | `enabled` | `boolean` | `true` | When `false`, all XP calls from this plugin for this skill are silently ignored |
 | `xp-multiplier` | `double` | `1.0` | Multiplied against the raw amount the plugin passes to `addExperience` |
 
-Plugins not listed in `plugin-overrides` are unaffected — they always award the exact amount they pass to the API. This feature only takes effect when third-party plugins use `EzSkillsAPI.addExperience(plugin, ...)`.
+Plugins not listed in `plugin-overrides` are unaffected; they always award the exact amount they pass to the API. This feature only takes effect when third-party plugins use `EzSkillsAPI.addExperience(plugin, ...)`.
 
 {: .note }
 After editing `config.yml` run `/ezskills reload` to apply changes without restarting the server.
@@ -81,24 +81,29 @@ $$\text{xp} = \text{base} \times \text{multiplier}^{n-1}$$
 woodcutting:
   xp-base:       100.0   # XP needed to reach level 2
   xp-multiplier: 1.5     # Exponential growth factor
+  max-level:     100     # Maximum attainable level
 
 mining:
   xp-base:       100.0
   xp-multiplier: 1.5
+  max-level:     100
 
 fishing:
   xp-base:       80.0
   xp-multiplier: 1.4
+  max-level:     100
 
 fighting:
   xp-base:       120.0
   xp-multiplier: 1.6
+  max-level:     100
 ```
 
 | Key | Type | Description |
 |-----|------|-------------|
 | `xp-base` | `double` | XP required for level 1 → 2. |
 | `xp-multiplier` | `double` | Multiplier applied each subsequent level. |
+| `max-level` | `int` | Maximum attainable level. Defaults to `100` if omitted. |
 
 ---
 
@@ -107,32 +112,32 @@ fighting:
 Configures per-skill ability timing.
 
 ```yaml
-woodcutting:
-  preparation-time: 30    # Seconds the ability stays "prepared" after trigger
-  active-time:      15    # Seconds the ability remains active
-  cooldown:         120   # Cooldown in seconds after the ability expires
+tree_feller:
+  preparation-window-seconds: 3.0    # Seconds the ability stays "prepared" after trigger
+  duration-ticks:             100    # Ticks the ability remains active (20 ticks = 1 s)
+  cooldown-seconds:           120.0  # Cooldown in seconds after the ability expires
 
-mining:
-  preparation-time: 30
-  active-time:      15
-  cooldown:         120
+spelunker:
+  preparation-window-seconds: 3.0
+  duration-ticks:             100
+  cooldown-seconds:           120.0
 
-fishing:
-  preparation-time: 30
-  active-time:      15
-  cooldown:         120
+angler:
+  preparation-window-seconds: 3.0
+  duration-ticks:             100
+  cooldown-seconds:           120.0
 
-fighting:
-  preparation-time: 30
-  active-time:      15
-  cooldown:         120
+warrior:
+  preparation-window-seconds: 3.0
+  duration-ticks:             100
+  cooldown-seconds:           120.0
 ```
 
 | Key | Type | Description |
 |-----|------|-------------|
-| `preparation-time` | `int` | Window (seconds) in which the player can trigger the ability. |
-| `active-time` | `int` | Duration (seconds) the ability stays active once triggered. |
-| `cooldown` | `int` | Cooldown (seconds) before the ability can be prepared again. |
+| `preparation-window-seconds` | `double` | Window (seconds) in which the player can trigger the ability. |
+| `duration-ticks` | `int` | Duration (ticks) the ability stays active once triggered (20 ticks = 1 s). |
+| `cooldown-seconds` | `double` | Cooldown (seconds) before the ability can be prepared again. |
 
 ---
 

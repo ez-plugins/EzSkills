@@ -14,44 +14,44 @@ EzSkills[/B] is a compact RPG progression plugin that layers levelling, XP gain,
 [IMG]https://img.shields.io/badge/Server%20software-Bukkit%20%7C%20Spigot%20%7C%20Paper-blue[/IMG]
 [IMG]https://img.shields.io/badge/Requires-Java%2025+-brightgreen[/IMG]
 
-[URL='https://discord.gg/yWP95XfmBS']Vote in #plugin-development on Discord — tell us what EzSkills plugin should come next![/URL]
+[URL='https://discord.gg/yWP95XfmBS']Vote in #plugin-development on Discord - tell us what EzSkills plugin should come next![/URL]
 
 [B][SIZE=5]Features[/SIZE][/B]
 
 [B]Four built-in skills[/B]
 [LIST]
-[*][B]Woodcutting[/B] — award XP for felling trees.
-[*][B]Mining[/B] — award XP for breaking ores and stone.
-[*][B]Fishing[/B] — award XP for catching fish.
-[*][B]Fighting[/B] — award XP for combat with mobs and players.
+[*][B]Woodcutting[/B] - award XP for felling trees.
+[*][B]Mining[/B] - award XP for breaking ores and stone.
+[*][B]Fishing[/B] - award XP for catching fish.
+[*][B]Fighting[/B] - award XP for combat with mobs and players.
 [/LIST]
-Every source plugin that calls [ICODE]EzSkillsAPI.addExperience(plugin, ...)[/ICODE] is subject to the per-plugin XP multiplier and enabled flag you configure centrally — no changes needed in third-party plugins.
+Every source plugin that calls [ICODE]EzSkillsAPI.addExperience(plugin, ...)[/ICODE] is subject to the per-plugin XP multiplier and enabled flag you configure centrally - no changes needed in third-party plugins.
 
 [B]Timed abilities[/B]
 [LIST]
 [*][B]Tree Feller[/B]: The built-in ability for Woodcutting. Players prepare, trigger and ride out an auto-expiring TREE_FELLER window.
 [*][B]Custom abilities[/B] (new in 2.0): Any plugin can register its own ability via [ICODE]EzSkillsAPI.registerAbility(definition)[/ICODE]. Custom abilities appear in the [ICODE]/abilities[/ICODE] GUI automatically.
-[*][B]Ability state GUI[/B] (new in 2.0): The [ICODE]/abilities[/ICODE] command opens an overview showing every registered ability with its current state — Ready (green), Preparing (yellow), or Active (gold).
+[*][B]Ability state GUI[/B] (new in 2.0): The [ICODE]/abilities[/ICODE] command opens an overview showing every registered ability with its current state - Ready (green), Preparing (yellow), or Active (gold).
 [/LIST]
 
 [B]Progression controls[/B]
 [LIST]
 [*][B]Scaling XP curve[/B]: Tune [ICODE]xp-base[/ICODE] and [ICODE]xp-multiplier[/ICODE] per skill in [ICODE]skills.yml[/ICODE] to keep early levels snappy and late-game grindy.
-[*][B]Per-plugin overrides[/B] (new in 2.0): In [ICODE]config.yml[/ICODE] set an [ICODE]xp-multiplier[/ICODE] or [ICODE]enabled: false[/ICODE] for any third-party plugin and any skill — no code changes needed on their side.
+[*][B]Per-plugin overrides[/B] (new in 2.0): In [ICODE]config.yml[/ICODE] set an [ICODE]xp-multiplier[/ICODE] or [ICODE]enabled: false[/ICODE] for any third-party plugin and any skill - no code changes needed on their side.
 [/LIST]
 
 [B]Storage[/B]
 [LIST]
-[*][B]YAML[/B] — zero-setup flat file, great for small servers.
-[*][B]MySQL[/B] — recommended for production; enables leaderboards via [ICODE]/ezskills top[/ICODE].
+[*][B]YAML[/B] - zero-setup flat file, great for small servers.
+[*][B]MySQL[/B] - recommended for production; enables leaderboards via [ICODE]/ezskills top[/ICODE].
 [/LIST]
 
 
 [B][SIZE=5]Core gameplay loop[/SIZE][/B]
 [LIST=1]
 [*][B]Configure[/B] XP curves in [ICODE]skills.yml[/ICODE] and ability timings in [ICODE]abilities.yml[/ICODE].
-[*][B]Earn XP[/B] as players break blocks, fish, fight — any event your integration plugin reports.
-[*][B]Level up[/B] — [ICODE]SkillLevelUpEvent[/ICODE] fires instantly for rewards, rank unlocks or boss-bar announcements.
+[*][B]Earn XP[/B] as players break blocks, fish, fight - any event your integration plugin reports.
+[*][B]Level up[/B]: [ICODE]SkillLevelUpEvent[/ICODE] fires instantly for rewards, rank unlocks or boss-bar announcements.
 [*][B]Prepare and activate[/B] an ability within its warm-up window to use a powerful timed effect.
 [*][B]View progress[/B] at any time with [ICODE]/skills[/ICODE] (levels) and [ICODE]/abilities[/ICODE] (ability states).
 [/LIST]
@@ -83,7 +83,7 @@ Every source plugin that calls [ICODE]EzSkillsAPI.addExperience(plugin, ...)[/IC
 [tr][td][ICODE]storage.yml[/ICODE][/td][td]Storage backend (YAML or MySQL) and connection details.[/td][/tr]
 [/table]
 
-[B]Per-plugin XP overrides[/B] — new in 2.0:
+[B]Per-plugin XP overrides[/B] (new in 2.0):
 [CODE]# config.yml
 plugin-overrides:
   MyPlugin:
@@ -120,17 +120,17 @@ plugin-overrides:
 
 [B]Events to listen for[/B]
 [LIST]
-[*][ICODE]SkillLevelUpEvent[/ICODE] — fired when a player reaches a new level (carries old and new level).
-[*][ICODE]EzSkillsAbilityPrepareEvent[/ICODE] — fired when an ability enters its warm-up window.
-[*][ICODE]EzSkillsAbilityActivateEvent[/ICODE] — fired when an ability activates.
-[*][ICODE]EzSkillsAbilityDeactivateEvent[/ICODE] — fired when an ability ends or is cancelled.
+[*][ICODE]SkillLevelUpEvent[/ICODE] - fired when a player reaches a new level (carries old and new level).
+[*][ICODE]EzSkillsAbilityPrepareEvent[/ICODE] - fired when an ability enters its warm-up window.
+[*][ICODE]EzSkillsAbilityActivateEvent[/ICODE] - fired when an ability activates.
+[*][ICODE]EzSkillsAbilityDeactivateEvent[/ICODE] - fired when an ability ends or is cancelled.
 [/LIST]
 
 [B]Implementing a custom ability[/B]
 [CODE]public class NightVisionAbility implements AbilityDefinition {
     @Override public String   getName()        { return "NIGHT_VISION"; }
     @Override public String   getDisplayName() { return "Night Vision"; }
-    @Override public Material getIcon()        { return Material.ENDER_EYE; } // optional — defaults to NETHER_STAR
+    @Override public Material getIcon()        { return Material.ENDER_EYE; } // optional - defaults to NETHER_STAR
     @Override public String   getDescription() { return "See clearly in the dark."; }
     @Override public String   getSkillName()   { return "FIGHTING"; }
 }

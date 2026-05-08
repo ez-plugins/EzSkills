@@ -26,7 +26,7 @@ and drop the jar into your server's `plugins/` folder.
 
 ## API
 
-### Maven — GitHub Packages
+### Maven - GitHub Packages
 
 ```xml
 <repositories>
@@ -43,7 +43,7 @@ and drop the jar into your server's `plugins/` folder.
 </dependency>
 ```
 
-### Maven — JitPack
+### Maven - JitPack
 
 ```xml
 <repositories>

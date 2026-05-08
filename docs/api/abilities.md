@@ -16,7 +16,7 @@ nav_exclude: true
 
 Any plugin can register its own abilities. Custom abilities automatically appear in the `/abilities` GUI alongside built-in ones, showing their current state (Ready / Preparing / Active) for every player.
 
-### Step 1 — Implement `AbilityDefinition`
+### Step 1: Implement `AbilityDefinition`
 
 Create a class that implements `com.github.ezplugins.ezskills.ability.AbilityDefinition`. The interface describes everything EzSkills needs to display and time the ability. **Read timing values from your own config** so server admins can adjust them:
 
@@ -38,7 +38,7 @@ public final class NightVisionAbility implements AbilityDefinition {
     @Override public Material getIcon()        { return Material.ENDER_EYE; }
     @Override public String   getDescription() { return "See clearly in the dark."; }
 
-    // Optional: associate with a skill — shown in the GUI lore
+    // Optional: associate with a skill - shown in the GUI lore
     @Override public String   getSkillName()   { return "FIGHTING"; }
 
     // Timing values read from your plugin's config.yml
@@ -67,7 +67,7 @@ abilities:
     cooldown-seconds: 120     # cooldown after the effect expires
 ```
 
-### Step 2 — Register in `onEnable`
+### Step 2: Register in `onEnable`
 
 Always check that EzSkills is present before calling the API:
 
@@ -88,7 +88,7 @@ softdepend:
   - EzSkills
 ```
 
-### Step 3 — Apply the effect
+### Step 3: Apply the effect
 
 Listen to `EzSkillsAbilityActivateEvent` to apply the actual game effect when the ability fires. Use the ability name to target only your own ability:
 
@@ -120,7 +120,7 @@ public final class NightVisionListener implements Listener {
 }
 ```
 
-### Step 4 — Trigger the ability lifecycle
+### Step 4: Trigger the ability lifecycle
 
 Use your own game events (e.g. a right-click, sneak, or any action) to move the ability through its states:
 
@@ -137,7 +137,7 @@ public final class NightVisionTriggerListener implements Listener {
         final var player = event.getPlayer();
 
         if (EzSkillsAPI.isAbilityActive(player, "NIGHT_VISION")) {
-            // Already active — do nothing
+            // Already active - do nothing
             return;
         }
 
@@ -145,7 +145,7 @@ public final class NightVisionTriggerListener implements Listener {
             // Charge it first; player must interact again within the window to activate
             EzSkillsAPI.prepareAbility(player, "NIGHT_VISION");
         } else {
-            // Second interaction within the window — activate!
+            // Second interaction within the window - activate!
             EzSkillsAPI.activateAbility(player, "NIGHT_VISION");
         }
     }
@@ -206,7 +206,7 @@ EzSkillsAPI.deactivateAbility(player, "NIGHT_VISION"); // cancel / end early
 
 ---
 
-## Configuration (`abilities.yml` — EzSkills)
+## Configuration (`abilities.yml` - EzSkills)
 
 Built-in abilities are configured in EzSkills' own `abilities.yml`. Custom abilities use the config of **your own plugin** as shown above.
 
