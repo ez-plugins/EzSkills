@@ -13,7 +13,7 @@
 
 ## Features
 
-### Four built-in skills
+### Five built-in skills
 
 | Skill | Description |
 |-------|-------------|
@@ -21,6 +21,7 @@
 | **Mining** | Award XP for breaking ores and stone |
 | **Fishing** | Award XP for catching fish |
 | **Fighting** | Award XP for combat with mobs and players |
+| **Acrobatics** | Award XP for jumping, falling, and sprinting |
 
 Every source plugin that calls `EzSkillsAPI.addExperience(plugin, ...)` is subject to the per-plugin XP multiplier and enabled flag you configure centrally - no changes needed in third-party plugins.
 
@@ -115,6 +116,13 @@ plugin-overrides:
 | `EzSkillsAPI.getSkillExperience(playerId, skill)` | Return the player's accumulated XP |
 | `EzSkillsAPI.setSkillLevel(playerId, skill, level)` | Set a level directly, resetting XP |
 | `EzSkillsAPI.getSkillProfile(playerId)` | Return the full profile object (null if not cached) |
+
+### Skills
+
+| Method | Description |
+|--------|-------------|
+| `EzSkillsAPI.registerSkill(definition)` | Register a custom skill at runtime; progress is persisted automatically |
+| `EzSkillsAPI.getRegisteredSkills()` | List all registered custom skill definitions |
 
 ### Abilities
 
