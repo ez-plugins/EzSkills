@@ -2,7 +2,7 @@
 
 **EzSkills** is a compact RPG progression plugin that layers levelling, XP gain, and timed abilities on top of your server's gameplay. Use it standalone or integrate with plugins like [EzTree](https://www.spigotmc.org/resources/117223/), [EzMine](https://www.spigotmc.org/resources/131060/), or your own custom plugins to turn repetitive actions into a rewarding skill loop.
 
-![Version](https://img.shields.io/badge/Latest%20version-2.0.0-blue)
+![Version](https://img.shields.io/badge/Latest%20version-2.0.1-blue)
 ![Minecraft](https://img.shields.io/badge/Minecraft-1.21%20%7C%2026.1-blue)
 ![Software](https://img.shields.io/badge/Server%20software-Bukkit%20%7C%20Spigot%20%7C%20Paper-blue)
 ![Java](https://img.shields.io/badge/Requires-Java%2025+-brightgreen)

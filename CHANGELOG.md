@@ -5,6 +5,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.0.1] - 2026-05-08
+
+### Fixed
+- JitPack build: skip checkstyle during `mvn install`, bump `maven-compiler-plugin` to 3.14.0 for Java 25 support
+
+---
+
 ## [2.0.0] - 2026-05-08
 
 ### Added

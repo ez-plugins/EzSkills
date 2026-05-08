@@ -41,7 +41,7 @@ and drop the jar into your server's `plugins/` folder.
 <dependency>
     <groupId>com.github.ez-plugins.EzSkills</groupId>
     <artifactId>ezskills-api</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 
@@ -58,7 +58,7 @@ and drop the jar into your server's `plugins/` folder.
 <dependency>
     <groupId>com.github.ez-plugins.EzSkills</groupId>
     <artifactId>ezskills-api</artifactId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
 </dependency>
 ```
 
