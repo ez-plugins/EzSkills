@@ -1,5 +1,8 @@
 ---
-nav_exclude: true
+layout: default
+title: Custom Skills
+parent: Developer Docs
+nav_order: 4
 ---
 
 # Skills API
@@ -12,6 +15,7 @@ nav_exclude: true
 | `MINING`      | Breaking ores/stone  |
 | `FISHING`     | Catching fish        |
 | `FIGHTING`    | Combat with mobs/players |
+| `ACROBATICS`  | Jumping, falling, and sprinting |
 
 Skill names are matched case-insensitively wherever the API accepts a `String` skill name.
 
@@ -175,3 +179,83 @@ mining:
   xp-base: 100.0
   xp-multiplier: 1.5
 ```
+
+---
+
+## Custom skills
+
+EzSkills lets you add your own skills at runtime without forking the plugin.
+Register a `SkillDefinition` in your plugin's `onEnable` and EzSkills will
+track XP and levels for it alongside the built-in skills.
+
+### Implement SkillDefinition
+
+```java
+import com.github.ezplugins.ezskills.skill.SkillDefinition;
+
+public class AlchemySkill implements SkillDefinition {
+
+    @Override
+    public String getName() {
+        return "ALCHEMY";               // unique, case-insensitive key
+    }
+
+    @Override
+    public String getDisplayName() {
+        return "Alchemy";
+    }
+
+    // All remaining methods have sensible defaults -- override as needed
+    @Override
+    public double getDefaultXpBase() { return 90.0; }
+
+    @Override
+    public double getDefaultXpMultiplier() { return 1.45; }
+
+    @Override
+    public int getDefaultMaxLevel() { return 100; }
+}
+```
+
+### Register in onEnable
+
+Call `EzSkillsAPI.registerSkill(...)` **before any players join**:
+
+```java
+@Override
+public void onEnable() {
+    if (Bukkit.getPluginManager().isPluginEnabled("EzSkills")) {
+        EzSkillsAPI.registerSkill(new AlchemySkill());
+    }
+}
+```
+
+> Use `depend: [EzSkills]` or `softdepend: [EzSkills]` in `plugin.yml` so EzSkills loads first.
+
+### Award and read XP
+
+After registration, the same string-based API works for custom skills:
+
+```java
+EzSkillsAPI.addExperience(myPlugin, player.getUniqueId(), "ALCHEMY", 25.0);
+int level = EzSkillsAPI.getSkillLevel(player.getUniqueId(), "ALCHEMY");
+```
+
+### Server-admin override
+
+Server admins can tune the XP curve in `skills.yml` using the lower-case skill name:
+
+```yaml
+alchemy:
+  xp-base:       90.0
+  xp-multiplier: 1.45
+  max-level:     100
+```
+
+If no entry exists, your `SkillDefinition` defaults are used automatically.
+
+### Current limitations
+
+- Custom skills do **not** appear in the player's `/skills` GUI in this version.
+- `SkillLevelUpEvent` is **not** fired for custom skill level-ups in this version.
+- Progress is persisted using the column pattern `<skillname>_level` / `<skillname>_experience`.

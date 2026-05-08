@@ -9,7 +9,7 @@ has_children: true
 # Skills
 {: .no_toc }
 
-EzSkills ships with four built-in skills. Click a skill to view its individual XP curve and configuration.
+EzSkills ships with five built-in skills. Click a skill to view its individual XP curve and configuration.
 
 ## Table of contents
 {: .no_toc .text-delta }
@@ -27,6 +27,7 @@ EzSkills ships with four built-in skills. Click a skill to view its individual X
 | [Mining](skills/mining) | `MINING` | Diamond Pickaxe | [Spelunker](abilities/spelunker) |
 | [Fishing](skills/fishing) | `FISHING` | Cod | [Angler](abilities/angler) |
 | [Fighting](skills/fighting) | `FIGHTING` | Iron Sword | [Warrior](abilities/warrior) |
+| [Acrobatics](skills/acrobatics) | `ACROBATICS` | Feather | --- |
 
 ---
 

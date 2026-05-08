@@ -17,13 +17,14 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Displays a 27-slot inventory overview of the player's skill progress.
+ * Displays a 36-slot inventory overview of the player's skill progress.
  *
- * <p>Layout (3 rows × 9 cols):</p>
+ * <p>Layout (4 rows × 9 cols):</p>
  * <pre>
  * Row 0: decorative dark-gray glass border
- * Row 1: [border] [WOOD] [gap] [MINE] [gap] [FISH] [gap] [FGHT] [border]
- * Row 2: decorative border with close button at slot 22
+ * Row 1: [border] [WOOD] [gap] [MINE] [gap] [FISH] [gap] [gap] [border]
+ * Row 2: [border] [gap] [gap] [FGHT] [gap] [ACRO] [gap] [gap] [border]
+ * Row 3: decorative border with close button at slot 31
  * </pre>
  *
  * <p>Each skill item shows level, current XP, XP needed for the next level,
@@ -31,11 +32,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class SkillProgressMenu {
 
-    /** Inventory size — 3 rows of 9 slots. */
-    private static final int SIZE = 27;
+    /** Inventory size -- 4 rows of 9 slots. */
+    private static final int SIZE = 36;
 
-    /** Slots where skill items are placed (Woodcutting → Mining → Fishing → Fighting). */
-    private static final int[] SKILL_SLOTS = {10, 12, 14, 16};
+    /**
+     * Slots where skill items are placed in SkillType enum order:
+     * Woodcutting(10), Mining(12), Fishing(14), Fighting(21), Acrobatics(23).
+     */
+    private static final int[] SKILL_SLOTS = {10, 12, 14, 21, 23};
 
     /** Progress-bar length in characters. */
     private static final int BAR_LENGTH = 12;
@@ -46,12 +50,13 @@ public final class SkillProgressMenu {
     /** Empty bar character (\u2591 = ░). */
     private static final String BAR_EMPTY = "\u2591";
 
-    /** Material icons — one per SkillType enum constant (same order). */
+    /** Material icons -- one per SkillType enum constant (same order). */
     private static final Material[] ICONS = {
         Material.OAK_LOG,
         Material.DIAMOND_PICKAXE,
         Material.COD,
-        Material.IRON_SWORD
+        Material.IRON_SWORD,
+        Material.FEATHER
     };
 
     /** Provides cached skill profiles. */
@@ -82,22 +87,31 @@ public final class SkillProgressMenu {
         final Inventory inv = Bukkit.createInventory(new SkillMenuHolder(), SIZE,
                 ChatColor.translateAlternateColorCodes('&', rawTitle));
 
-        // Fill border rows with decorative panes
+        // Fill top and bottom border rows
         final ItemStack border = buildBorderPane();
         for (int i = 0; i < 9; i++) {
             inv.setItem(i, border);
-            inv.setItem(18 + i, border);
+            inv.setItem(27 + i, border);
         }
-        // Side borders on middle row
+        // Side borders on middle two rows
         inv.setItem(9, border);
         inv.setItem(17, border);
-        // Gap panes between skills
+        inv.setItem(18, border);
+        inv.setItem(26, border);
+        // Gap panes in row 1 (between/around skills)
         inv.setItem(11, border);
         inv.setItem(13, border);
         inv.setItem(15, border);
+        inv.setItem(16, border);
+        // Gap panes in row 2 (around skills)
+        inv.setItem(19, border);
+        inv.setItem(20, border);
+        inv.setItem(22, border);
+        inv.setItem(24, border);
+        inv.setItem(25, border);
 
         // Close button
-        inv.setItem(22, buildCloseButton());
+        inv.setItem(31, buildCloseButton());
 
         // Skill items
         final SkillType[] types = SkillType.values();

@@ -1,6 +1,7 @@
 package com.github.ezplugins.ezskills.api;
 
 import com.github.ezplugins.ezskills.ability.AbilityDefinition;
+import com.github.ezplugins.ezskills.skill.SkillDefinition;
 import com.github.ezplugins.ezskills.skill.SkillProfile;
 import java.util.List;
 import java.util.UUID;
@@ -140,6 +141,30 @@ public final class EzSkillsAPI {
      */
     public static void setSkillLevel(@NotNull UUID playerId, @NotNull String skillName, int level) {
         service().setSkillLevel(playerId, skillName, level);
+    }
+
+    /**
+     * Registers a custom {@link SkillDefinition} so that EzSkills tracks it as a skill.
+     *
+     * <p>Call this from your plugin's {@code onEnable}, before any players join.
+     * The skill name must not clash with a built-in
+     * {@link com.github.ezplugins.ezskills.skill.SkillType} name.</p>
+     *
+     * @param definition the definition to register
+     * @throws IllegalArgumentException if the name conflicts with a built-in skill
+     */
+    public static void registerSkill(@NotNull SkillDefinition definition) {
+        service().registerSkill(definition);
+    }
+
+    /**
+     * Returns all currently registered custom skill definitions.
+     *
+     * @return unmodifiable list of definitions
+     */
+    @NotNull
+    public static List<SkillDefinition> getRegisteredSkills() {
+        return service().getRegisteredSkills();
     }
 
     // -------------------------------------------------------------------------
