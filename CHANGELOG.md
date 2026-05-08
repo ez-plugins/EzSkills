@@ -5,6 +5,13 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2.0.3] - 2026-05-08
+
+### Fixed
+- JitPack build: remove invalid `build:` key from `jitpack.yml`, switch compiler config to `source`/`target` properties
+
+---
+
 ## [2.0.2] - 2026-05-08
 
 ### Fixed
