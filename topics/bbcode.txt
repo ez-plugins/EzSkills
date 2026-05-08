@@ -18,12 +18,13 @@ EzSkills[/B] is a compact RPG progression plugin that layers levelling, XP gain,
 
 [B][SIZE=5]Features[/SIZE][/B]
 
-[B]Four built-in skills[/B]
+[B]Five built-in skills[/B]
 [LIST]
 [*][B]Woodcutting[/B] - award XP for felling trees.
 [*][B]Mining[/B] - award XP for breaking ores and stone.
 [*][B]Fishing[/B] - award XP for catching fish.
 [*][B]Fighting[/B] - award XP for combat with mobs and players.
+[*][B]Acrobatics[/B] - award XP for jumping, falling, and sprinting.
 [/LIST]
 Every source plugin that calls [ICODE]EzSkillsAPI.addExperience(plugin, ...)[/ICODE] is subject to the per-plugin XP multiplier and enabled flag you configure centrally - no changes needed in third-party plugins.
 
@@ -105,6 +106,13 @@ plugin-overrides:
 [tr][td][ICODE]EzSkillsAPI.getSkillExperience(playerId, skill)[/ICODE][/td][td]Return the player's accumulated XP.[/td][/tr]
 [tr][td][ICODE]EzSkillsAPI.setSkillLevel(playerId, skill, level)[/ICODE][/td][td]Set a level directly, resetting XP to zero.[/td][/tr]
 [tr][td][ICODE]EzSkillsAPI.getSkillProfile(playerId)[/ICODE][/td][td]Return the full profile object (null if not cached).[/td][/tr]
+[/table]
+
+[B]Custom skills[/B]
+[table]
+[tr][th]Method[/th][th]Description[/th][/tr]
+[tr][td][ICODE]EzSkillsAPI.registerSkill(definition)[/ICODE][/td][td]Register a custom skill at runtime; progress is persisted automatically.[/td][/tr]
+[tr][td][ICODE]EzSkillsAPI.getRegisteredSkills()[/ICODE][/td][td]List all registered custom skill definitions.[/td][/tr]
 [/table]
 
 [B]Abilities[/B]

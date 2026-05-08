@@ -164,7 +164,7 @@ jobs:
               'version_type':  'release',
               'loaders':       ['paper','folia','purpur','spigot','bukkit'],
               'featured':      True,
-              'project_id':    'YOUR_MODRINTH_PROJECT_ID',
+              'project_id':    'AwpXN7HO',
               'primary_file':  'plugin_jar',
               'file_parts':    ['plugin_jar']
           }))" > /tmp/modrinth_payload.json

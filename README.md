@@ -4,12 +4,14 @@ A lightweight, extensible skill progression system for Minecraft servers running
 
 [![JitPack](https://jitpack.io/v/ez-plugins/EzSkills.svg)](https://jitpack.io/#ez-plugins/EzSkills)
 [![GitHub release](https://img.shields.io/github/release/ez-plugins/EzSkills.svg)](https://github.com/ez-plugins/EzSkills/releases)
+[![Modrinth](https://img.shields.io/modrinth/v/AwpXN7HO?label=Modrinth)](https://modrinth.com/plugin/AwpXN7HO)
 [![Codecov](https://img.shields.io/codecov/c/github/ez-plugins/EzSkills)](https://codecov.io/gh/ez-plugins/EzSkills)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE.md)
 
 ## Features
 
-- Four built-in skills: **Woodcutting**, **Mining**, **Fishing**, and **Fighting**
+- Five built-in skills: **Woodcutting**, **Mining**, **Fishing**, **Fighting**, and **Acrobatics**
+- **Custom skills API** — register your own skills at runtime via `SkillDefinition` and `EzSkillsAPI.registerSkill()`
 - Asynchronous, non-blocking storage backed by [Jaloquent](https://github.com/EzFramework/Jaloquent)
 - YAML flat-file storage out of the box; MySQL with a config switch
 - Clean public API module (`ezskills-api`) for other plugins to integrate
@@ -39,7 +41,7 @@ and drop the jar into your server's `plugins/` folder.
 <dependency>
     <groupId>com.github.ez-plugins.EzSkills</groupId>
     <artifactId>ezskills-api</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 
@@ -56,7 +58,7 @@ and drop the jar into your server's `plugins/` folder.
 <dependency>
     <groupId>com.github.ez-plugins.EzSkills</groupId>
     <artifactId>ezskills-api</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 

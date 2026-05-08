@@ -16,11 +16,12 @@ Built on [Jaloquent](https://github.com/EzFramework/Jaloquent) and
 
 ## Features
 
-- **Four built-in skills**: Woodcutting, Mining, Fishing, Fighting
+- **Five built-in skills**: Woodcutting, Mining, Fishing, Fighting, Acrobatics
+- **Custom skills API**: register runtime skills via `SkillDefinition` and `EzSkillsAPI.registerSkill()`
 - **Per-skill abilities**: configurable preparation windows, activation durations, and cooldowns
 - **Async storage**: all reads and writes happen off the main thread via a dedicated worker
 - **Dual storage backends**: YAML (flat file) or MySQL (HikariCP connection pool)
-- **Rich player GUI**: 27-slot skill overview with Unicode progress bars
+- **Rich player GUI**: 36-slot skill overview with Unicode progress bars
 - **Admin commands**: `get`, `info`, `addxp`, `setlevel`, `reset`, `resetall`, `top`, `reload`
 - **Developer API**: `EzSkillsAPI`, `SkillLevelUpEvent`, and more event hooks
 
