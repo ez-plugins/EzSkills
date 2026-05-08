@@ -1,0 +1,24 @@
+# Skills XP configuration
+# xp-base:       XP required to reach level 2
+# xp-multiplier: multiplier applied per level (xpForLevel = base * multiplier^(level-1))
+# max-level:     maximum level cap; players cannot level up beyond this value
+
+woodcutting:
+  xp-base: 100.0
+  xp-multiplier: 1.5
+  max-level: 100
+
+mining:
+  xp-base: 100.0
+  xp-multiplier: 1.5
+  max-level: 100
+
+fishing:
+  xp-base: 80.0
+  xp-multiplier: 1.4
+  max-level: 100
+
+fighting:
+  xp-base: 120.0
+  xp-multiplier: 1.6
+  max-level: 100

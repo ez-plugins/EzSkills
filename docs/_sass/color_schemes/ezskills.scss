@@ -1,0 +1,42 @@
+// EzSkills — dark/green/white color scheme for just-the-docs
+//
+// Palette:
+//   Background   #141414  (body)
+//   Surface      #1a1f1a  (sidebar, cards)
+//   Elevated     #1e241e  (code blocks, search, table rows)
+//   Border       #2a322a
+//   Text         #d0d0d0  (body)  /  #ffffff (headings)
+//   Accent       #4caf50  (green — links, nav highlight, buttons)
+//   Accent dim   #388e3c  (hover state)
+
+$color-scheme: dark;
+
+// ── Surfaces ──────────────────────────────────────────────────────────────────
+$body-background-color: #141414;
+$sidebar-color:         #1a1f1a;
+$feedback-color:        #181e18;
+
+// ── Typography ────────────────────────────────────────────────────────────────
+$body-text-color:    #d0d0d0;
+$body-heading-color: #ffffff;
+
+// ── Links & accent ────────────────────────────────────────────────────────────
+$link-color:        #4caf50;
+$btn-primary-color: #4caf50;
+
+// ── Borders ───────────────────────────────────────────────────────────────────
+$border-color: #2a322a;
+
+// ── Code ──────────────────────────────────────────────────────────────────────
+$code-background-color: #1e241e;
+
+// ── Tables ────────────────────────────────────────────────────────────────────
+$table-background-color: #181e18;
+
+// ── Search ────────────────────────────────────────────────────────────────────
+$search-background-color: #1e241e;
+$search-foreground-color:  #c0c0c0;
+$search-border-color:     #2a322a;
+
+// ── Buttons ───────────────────────────────────────────────────────────────────
+$base-button-color: #1e241e;

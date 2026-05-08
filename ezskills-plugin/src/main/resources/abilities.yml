@@ -1,0 +1,11 @@
+# Ability configuration
+
+tree_feller:
+  # Seconds the ability stays in the "prepared" state after the player
+  # performs the activation gesture (sneak + right-click).
+  preparation-window-seconds: 3.0
+  # How long (in server ticks, 20 ticks = 1 second) the ability remains active.
+  duration-ticks: 100
+  # Cooldown in seconds before the ability can be used again after deactivating.
+  # Set to 0 to disable cooldowns.
+  cooldown-seconds: 120.0

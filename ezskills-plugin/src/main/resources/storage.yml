@@ -1,0 +1,22 @@
+# Storage backend configuration
+storage:
+  # Either "yaml" or "mysql"
+  type: yaml
+
+  mysql:
+    host: localhost
+    port: 3306
+    database: ezskills
+    username: root
+    password: ""
+    # Optional table prefix, e.g. "server1_"
+    table-prefix: ""
+    # Whether to require SSL/TLS for the MySQL connection.
+    # Set to true and configure ssl-mode for production environments.
+    ssl: false
+    # MySQL sslMode parameter. Relevant values: DISABLED, PREFERRED, REQUIRED, VERIFY_CA, VERIFY_IDENTITY
+    # Defaults to DISABLED when ssl is false, PREFERRED when ssl is true.
+    # ssl-mode: DISABLED
+    pool:
+      max-size: 10
+      min-idle: 2

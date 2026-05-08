@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.ez-plugins.EzSkills</groupId>
+        <artifactId>ezskills</artifactId>
+        <version>2.0.0</version>
+    </parent>
+
+    <artifactId>ezskills-plugin</artifactId>
+    <name>EzSkills — Plugin</name>
+    <description>EzSkills Bukkit plugin implementation</description>
+
+    <dependencies>
+        <!-- API module -->
+        <dependency>
+            <groupId>com.github.ez-plugins.EzSkills</groupId>
+            <artifactId>ezskills-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Spigot API (provided by the server) -->
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Jaloquent ORM — shaded into the plugin jar -->
+        <dependency>
+            <groupId>com.github.EzFramework</groupId>
+            <artifactId>jaloquent</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <!-- MySQL JDBC driver — shaded into the plugin jar -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>9.2.0</version>
+        </dependency>
+
+        <!-- HikariCP connection pool — shaded into the plugin jar -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>6.2.1</version>
+        </dependency>
+
+        <!-- Static analysis annotations (compile-time only) -->
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- EzCountdown (optional softdepend — boss-bar level-up notifications) -->
+        <dependency>
+            <groupId>com.github.ez-plugins</groupId>
+            <artifactId>EzCountdown</artifactId>
+            <version>1.2.2</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.6.0</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm</artifactId>
+                        <version>9.8</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.ow2.asm</groupId>
+                        <artifactId>asm-commons</artifactId>
+                        <version>9.8</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.github.ezframework.jaloquent</pattern>
+                                    <shadedPattern>com.github.ezplugins.ezskills.libs.jaloquent</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.github.ezframework.javaquerybuilder</pattern>
+                                    <shadedPattern>com.github.ezplugins.ezskills.libs.querybuilder</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.zaxxer.hikari</pattern>
+                                    <shadedPattern>com.github.ezplugins.ezskills.libs.hikari</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.mysql</pattern>
+                                    <shadedPattern>com.github.ezplugins.ezskills.libs.mysql</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*</artifact>
+                                    <excludes>
+                                        <exclude>META-INF/MANIFEST.MF</exclude>
+                                        <exclude>META-INF/*.SF</exclude>
+                                        <exclude>META-INF/*.DSA</exclude>
+                                        <exclude>META-INF/*.RSA</exclude>
+                                        <exclude>META-INF/versions/*/module-info.class</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

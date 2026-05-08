@@ -1,0 +1,98 @@
+package com.github.ezplugins.ezskills;
+
+import com.github.ezplugins.ezskills.ability.AbilityDefinitionRegistry;
+import com.github.ezplugins.ezskills.ability.AbilityManager;
+import com.github.ezplugins.ezskills.config.ConfigManager;
+import com.github.ezplugins.ezskills.skill.SkillManager;
+import com.github.ezplugins.ezskills.storage.StorageManager;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Central registry that holds every live plugin component instance.
+ *
+ * <p>Populated by {@link Bootstrap#start()} and cleared by {@link Bootstrap#stop()}.
+ * External callers (commands, listeners, etc.) may obtain components via
+ * {@link #get()} after the plugin has been enabled.</p>
+ */
+public final class Registry {
+
+    /** Singleton; non-null only while the plugin is enabled. */
+    private static Registry instance;
+
+    private final ConfigManager configManager;
+    private final StorageManager storageManager;
+    private final SkillManager skillManager;
+    private final AbilityDefinitionRegistry abilityDefinitionRegistry;
+    private final AbilityManager abilityManager;
+
+    Registry(@NotNull final ConfigManager configManager,
+             @NotNull final StorageManager storageManager,
+             @NotNull final SkillManager skillManager,
+             @NotNull final AbilityDefinitionRegistry abilityDefinitionRegistry,
+             @NotNull final AbilityManager abilityManager) {
+        this.configManager = configManager;
+        this.storageManager = storageManager;
+        this.skillManager = skillManager;
+        this.abilityDefinitionRegistry = abilityDefinitionRegistry;
+        this.abilityManager = abilityManager;
+    }
+
+    // -------------------------------------------------------------------------
+    // Lifecycle (package-private — only Bootstrap touches these)
+    // -------------------------------------------------------------------------
+
+    static void register(@NotNull final Registry registry) {
+        instance = registry;
+    }
+
+    static void unregister() {
+        instance = null;
+    }
+
+    // -------------------------------------------------------------------------
+    // Access
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the active {@link Registry} instance.
+     *
+     * @return the registry
+     * @throws IllegalStateException if EzSkills is not currently enabled
+     */
+    @NotNull
+    public static Registry get() {
+        if (instance == null) {
+            throw new IllegalStateException("EzSkills is not enabled on this server.");
+        }
+        return instance;
+    }
+
+    // -------------------------------------------------------------------------
+    // Component getters
+    // -------------------------------------------------------------------------
+
+    @NotNull
+    public ConfigManager getConfigManager() {
+        return configManager;
+    }
+
+    @NotNull
+    public StorageManager getStorageManager() {
+        return storageManager;
+    }
+
+    @NotNull
+    public SkillManager getSkillManager() {
+        return skillManager;
+    }
+
+    @NotNull
+    public AbilityDefinitionRegistry getAbilityDefinitionRegistry() {
+        return abilityDefinitionRegistry;
+    }
+
+    @NotNull
+    public AbilityManager getAbilityManager() {
+        return abilityManager;
+    }
+}

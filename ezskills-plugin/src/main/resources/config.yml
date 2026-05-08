@@ -1,0 +1,32 @@
+# EzSkills configuration
+
+# GUI settings
+gui:
+  title: "&6Skills"
+  abilities-title: "&6Abilities"
+
+# Level-up boss-bar notifications
+# Requires EzCountdown (https://github.com/ez-plugins/EzCountdown) to be installed.
+# Placeholders: {player}, {skill}, {level}
+notifications:
+  bossbar:
+    enabled: true
+    duration: 5
+    message: "&6\u2b06 {player} reached {skill} Level {level}!"
+# Per-plugin XP overrides
+# Control how much XP each third-party plugin can award per skill, and whether it
+# is allowed to award XP for a skill at all.
+#
+# Keys are the exact plugin name (case-sensitive). Under each plugin name, add one
+# section per skill. Missing plugins or skills default to enabled=true, multiplier=1.0.
+#
+# Example:
+#
+# plugin-overrides:
+#   MyPlugin:
+#     woodcutting:
+#       enabled: true
+#       xp-multiplier: 1.5   # awards 50% more Woodcutting XP than the raw value passed
+#     mining:
+#       enabled: false        # this plugin cannot award Mining XP at all
+plugin-overrides: {}

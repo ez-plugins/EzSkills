@@ -1,0 +1,31 @@
+name: EzSkills
+version: '${project.version}'
+main: com.github.ezplugins.ezskills.EzSkills
+api-version: '1.21'
+description: Lightweight skill progression system
+authors: [ ez-plugins ]
+website: https://github.com/ez-plugins/EzSkills
+softdepend:
+  - EzCountdown
+
+commands:
+  ezskills:
+    description: EzSkills admin command
+    usage: /ezskills <subcommand>
+    permission: ezskills.admin
+  abilities:
+    description: View your ability states
+    usage: /abilities
+    permission: ezskills.use
+  skills:
+    description: View your skill levels
+    usage: /skills [skill]
+    permission: ezskills.use
+
+permissions:
+  ezskills.admin:
+    description: Access to all /ezskills admin commands
+    default: op
+  ezskills.use:
+    description: Use the /skills player command
+    default: true

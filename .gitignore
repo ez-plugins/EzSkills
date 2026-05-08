@@ -1,0 +1,21 @@
+# Directories
+target/
+*/target/
+*.class
+
+# Maven
+.mvn/timing.properties
+dependency-reduced-pom.xml
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build output jars (keep only shaded plugin jar in releases)
+!ezskills-plugin/target/*-shaded.jar
