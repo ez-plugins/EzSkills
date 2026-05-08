@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public final class EzSkills extends JavaPlugin {
 
+    /** Bootstrap instance that manages startup and shutdown. */
     private Bootstrap bootstrap;
 
     @Override

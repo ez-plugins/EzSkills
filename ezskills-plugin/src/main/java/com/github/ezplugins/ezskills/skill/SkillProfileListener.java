@@ -1,7 +1,6 @@
 package com.github.ezplugins.ezskills.skill;
 
 import com.github.ezplugins.ezskills.ability.AbilityManager;
-import com.github.ezplugins.ezskills.skill.SkillManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
