@@ -112,9 +112,11 @@ public final class AbilityOverviewMenu {
         final String stateName;
         if (active) {
             stateName = ChatColor.GOLD + "" + ChatColor.BOLD + def.getDisplayName();
-        } else if (preparing) {
+        }
+        else if (preparing) {
             stateName = ChatColor.YELLOW + def.getDisplayName();
-        } else {
+        }
+        else {
             stateName = ChatColor.GREEN + def.getDisplayName();
         }
         meta.setDisplayName(stateName);
@@ -137,9 +139,11 @@ public final class AbilityOverviewMenu {
 
         if (active) {
             lore.add(ChatColor.GOLD + "⚡ Active!");
-        } else if (preparing) {
+        }
+        else if (preparing) {
             lore.add(ChatColor.YELLOW + "◐ Preparing...");
-        } else {
+        }
+        else {
             lore.add(ChatColor.GREEN + "● Ready");
         }
 

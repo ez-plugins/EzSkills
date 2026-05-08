@@ -8,7 +8,7 @@ permalink: /server-owners/
 
 # Server Owners
 
-Everything you need to set up and manage EzSkills — no programming required.
+Everything you need to set up and manage EzSkills - no programming required.
 
 | Page | What it covers |
 |------|----------------|

@@ -41,7 +41,7 @@ Check what level and XP a player has before taking action:
 /ezskills info <player>
 ```
 
-Works for **offline players** — data is loaded from storage asynchronously and printed to your chat when ready.
+Works for **offline players**; data is loaded from storage asynchronously and printed to your chat when ready.
 
 To check a single skill:
 

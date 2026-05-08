@@ -19,10 +19,19 @@ public final class Registry {
     /** Singleton; non-null only while the plugin is enabled. */
     private static Registry instance;
 
+    /** Manages configuration files for the plugin. */
     private final ConfigManager configManager;
+
+    /** Manages the storage backend (YAML or MySQL). */
     private final StorageManager storageManager;
+
+    /** Manages skill profiles and XP/level operations. */
     private final SkillManager skillManager;
+
+    /** Registry of all registered ability definitions (built-in and custom). */
     private final AbilityDefinitionRegistry abilityDefinitionRegistry;
+
+    /** Manages per-player ability state (preparing, active, cooldown). */
     private final AbilityManager abilityManager;
 
     Registry(@NotNull final ConfigManager configManager,

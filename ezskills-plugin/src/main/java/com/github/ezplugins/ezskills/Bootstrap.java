@@ -158,11 +158,16 @@ public final class Bootstrap {
         return new AbilityOverviewMenu(abilityDefinitionRegistry, abilityManager);
     }
 
-    /** Returns the registry if the plugin is active, or {@code null} if it was never started. */
+    /**
+     * Returns the registry if the plugin is active, or {@code null} if it was never started.
+     *
+     * @return the active {@link Registry}, or {@code null}
+     */
     private Registry registryIfPresent() {
         try {
             return Registry.get();
-        } catch (IllegalStateException ignored) {
+        }
+        catch (IllegalStateException ignored) {
             return null;
         }
     }

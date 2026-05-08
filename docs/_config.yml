@@ -3,7 +3,7 @@ remote_theme: just-the-docs/just-the-docs
 title: EzSkills
 description: >-
   A modular, async skill system for Spigot/Paper servers. Supports SQL (MySQL via HikariCP)
-  and flat-file (YAML) storage backed by Jaloquent — zero raw SQL in the plugin itself.
+  and flat-file (YAML) storage backed by Jaloquent - zero raw SQL in the plugin itself.
 
 url: "https://ez-plugins.github.io"
 baseurl: "/EzSkills"

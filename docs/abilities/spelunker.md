@@ -11,7 +11,7 @@ nav_order: 2
 
 Spelunker is the ability associated with the [Mining](../skills/mining) skill.
 
-When triggered, EzSkills marks the player as having Spelunker active and fires `EzSkillsAbilityActivateEvent`. The actual in-game effect — such as a temporary haste buff or vein mining — is implemented by your server's integration or companion plugin.
+When triggered, EzSkills marks the player as having Spelunker active and fires `EzSkillsAbilityActivateEvent`. The actual in-game effect - such as a temporary haste buff or vein mining - is implemented by your server's integration or companion plugin.
 
 - **Skill:** [Mining](../skills/mining)
 - **Enum constant:** `SPELUNKER`
@@ -35,9 +35,9 @@ Inactive → Preparing → Active → Cooldown → Inactive
 | State | Description |
 |-------|-------------|
 | **Inactive** | Ready; no cooldown active |
-| **Preparing** | Charged — the player has `preparation-time` seconds to trigger activation |
-| **Active** | Live for `active-time` seconds; integration effects should fire now |
-| **Cooldown** | Must wait `cooldown` seconds before preparing again |
+| **Preparing** | Charged: the player has `preparation-window-seconds` seconds to trigger activation |
+| **Active** | Live for `duration-ticks` ticks; integration effects should fire now |
+| **Cooldown** | Must wait `cooldown-seconds` seconds before preparing again |
 
 ---
 
@@ -45,17 +45,17 @@ Inactive → Preparing → Active → Cooldown → Inactive
 
 ```yaml
 # abilities.yml
-mining:
-  preparation-time: 30    # seconds the ability stays prepared
-  active-time:      15    # seconds the ability remains active
-  cooldown:         120   # cooldown after expiry
+spelunker:
+  preparation-window-seconds: 3.0    # seconds the ability stays prepared
+  duration-ticks:             100    # ticks the ability remains active (20 ticks = 1 s)
+  cooldown-seconds:           120.0  # cooldown after expiry
 ```
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `preparation-time` | `int` | `30` | Window in which the player can trigger activation |
-| `active-time` | `int` | `15` | How long the ability stays active |
-| `cooldown` | `int` | `120` | Post-expiry cooldown in seconds |
+| `preparation-window-seconds` | `double` | `3.0` | Window in which the player can trigger activation |
+| `duration-ticks` | `int` | `100` | How long the ability stays active (in ticks) |
+| `cooldown-seconds` | `double` | `120.0` | Post-expiry cooldown in seconds |
 
 ---
 

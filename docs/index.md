@@ -10,19 +10,19 @@ permalink: /
 
 A modular, asynchronous skill system for **Spigot / Paper** servers.
 Built on [Jaloquent](https://github.com/EzFramework/Jaloquent) and
-[JavaQueryBuilder](https://github.com/EzFramework/JavaQueryBuilder) — **zero raw SQL** in the plugin itself.
+[JavaQueryBuilder](https://github.com/EzFramework/JavaQueryBuilder) - **zero raw SQL** in the plugin itself.
 
 ---
 
 ## Features
 
-- **Four built-in skills** — Woodcutting, Mining, Fishing, Fighting
-- **Per-skill abilities** — configurable preparation windows, activation durations, and cooldowns
-- **Async storage** — all reads and writes happen off the main thread via a dedicated worker
-- **Dual storage backends** — YAML (flat file) or MySQL (HikariCP connection pool)
-- **Rich player GUI** — 27-slot skill overview with Unicode progress bars
-- **Admin commands** — `get`, `info`, `addxp`, `setlevel`, `reset`, `resetall`, `top`, `reload`
-- **Developer API** — `EzSkillsAPI`, `SkillLevelUpEvent`, and more event hooks
+- **Four built-in skills**: Woodcutting, Mining, Fishing, Fighting
+- **Per-skill abilities**: configurable preparation windows, activation durations, and cooldowns
+- **Async storage**: all reads and writes happen off the main thread via a dedicated worker
+- **Dual storage backends**: YAML (flat file) or MySQL (HikariCP connection pool)
+- **Rich player GUI**: 27-slot skill overview with Unicode progress bars
+- **Admin commands**: `get`, `info`, `addxp`, `setlevel`, `reset`, `resetall`, `top`, `reload`
+- **Developer API**: `EzSkillsAPI`, `SkillLevelUpEvent`, and more event hooks
 
 ---
 
@@ -40,8 +40,8 @@ Built on [Jaloquent](https://github.com/EzFramework/Jaloquent) and
 
 | Requirement | Version |
 |-------------|---------|
-| Java        | 17+     |
-| Spigot / Paper | 1.20+ |
+| Java        | 25+     |
+| Spigot / Paper | 26.1+ |
 | MySQL (optional) | 8.0+ |
 
 ---

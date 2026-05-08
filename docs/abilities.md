@@ -42,9 +42,9 @@ Inactive → Preparing → Active → Cooldown → Inactive
 | State | Description |
 |-------|-------------|
 | **Inactive** | Ready; no cooldown active |
-| **Preparing** | Charged — the player has `preparation-time` seconds to trigger activation |
-| **Active** | Live for `active-time` seconds; fires `EzSkillsAbilityActivateEvent` |
-| **Cooldown** | Must wait `cooldown` seconds before preparing again |
+| **Preparing** | Charged: the player has `preparation-window-seconds` seconds to trigger activation |
+| **Active** | Live for `duration-ticks` ticks; fires `EzSkillsAbilityActivateEvent` |
+| **Cooldown** | Must wait `cooldown-seconds` seconds before preparing again |
 
 ---
 
@@ -53,17 +53,17 @@ Inactive → Preparing → Active → Cooldown → Inactive
 Each ability is configured in `abilities.yml`:
 
 ```yaml
-woodcutting:               # one section per skill
-  preparation-time: 30     # seconds the ability stays "prepared"
-  active-time:      15     # seconds the ability remains active
-  cooldown:         120    # cooldown after expiry
+tree_feller:                          # ability enum name in lower_snake_case
+  preparation-window-seconds: 3.0    # seconds the ability stays "prepared"
+  duration-ticks:             100    # ticks the ability remains active (20 ticks = 1 s)
+  cooldown-seconds:           120.0  # cooldown in seconds after expiry
 ```
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| `preparation-time` | `int` | `30` | Preparation window (seconds) |
-| `active-time` | `int` | `15` | Active duration (seconds) |
-| `cooldown` | `int` | `120` | Post-expiry cooldown (seconds) |
+| `preparation-window-seconds` | `double` | `3.0` | Preparation window in seconds |
+| `duration-ticks` | `int` | `100` | Active duration in ticks (20 ticks = 1 s) |
+| `cooldown-seconds` | `double` | `120.0` | Post-expiry cooldown in seconds |
 
 ---
 

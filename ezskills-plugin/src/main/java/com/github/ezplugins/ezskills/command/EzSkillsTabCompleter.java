@@ -1,7 +1,6 @@
 package com.github.ezplugins.ezskills.command;
 
 import com.github.ezplugins.ezskills.ability.AbilityDefinitionRegistry;
-import com.github.ezplugins.ezskills.ability.AbilityType;
 import com.github.ezplugins.ezskills.skill.SkillType;
 import java.util.Arrays;
 import java.util.List;

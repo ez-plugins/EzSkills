@@ -22,7 +22,7 @@ Each player record contains:
 
 | Column / Key              | Type   | Default |
 |---------------------------|--------|---------|
-| `id`                      | UUID   | —       |
+| `id`                      | UUID   | (pk)    |
 | `woodcutting_level`       | int    | 1       |
 | `woodcutting_experience`  | double | 0       |
 | `mining_level`            | int    | 1       |
